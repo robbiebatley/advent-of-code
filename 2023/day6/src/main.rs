@@ -38,9 +38,10 @@ fn main() {
     let distances: Vec<u64> = parse_numbers(input.get(1).unwrap());
 
     let part1: u64 = times
-        .iter()
-        .zip(distances.iter())
-        .map(|(t, d)| number_solutions(*t, *d))
+        .clone()
+        .into_iter()
+        .zip(distances.clone().into_iter())
+        .map(|(t, d)| number_solutions(t, d))
         .product();
 
     println!("Part 1: {:?}", part1);

@@ -73,8 +73,8 @@ fn apply_map(x: i64, map: &Map) -> i64 {
     x
 }
 
-fn apply_map2(seed: &Range, map: &Map) -> Vec<Range> {
-    let mut queue: Vec<Range> = vec![seed.clone()];
+fn apply_map2(seed: Range, map: &Map) -> Vec<Range> {
+    let mut queue: Vec<Range> = vec![seed];
     let mut out: Vec<Range> = Vec::new();
     while let Some(s) = queue.pop() {
         let mut found = false;
@@ -106,7 +106,8 @@ fn apply_map2(seed: &Range, map: &Map) -> Vec<Range> {
 
 fn map_all_ranges(seed_ranges: Vec<Range>, map: &Map) -> Vec<Range> {
     seed_ranges
-        .iter()
+        .clone()
+        .into_iter()
         .flat_map(|s| apply_map2(s, map))
         .collect()
 }
@@ -125,11 +126,11 @@ fn main() {
     
     println!("Part 1: {}", part1);
 
-    let starts = seeds.iter().step_by(2);
-    let ends = seeds.iter().skip(1).step_by(2);
+    let starts = seeds.clone().into_iter().step_by(2);
+    let ends = seeds.clone().into_iter().skip(1).step_by(2);
     let seed_ranges: Vec<Range> = starts
         .zip(ends)
-        .map(|(start, end)| Range{start: *start, end: *start + *end - 1})
+        .map(|(start, end)| Range{start, end: start + end - 1})
         .collect();
 
     let part2 = maps
