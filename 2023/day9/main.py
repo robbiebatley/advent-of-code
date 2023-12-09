@@ -1,5 +1,6 @@
 from typing import List
 from itertools import pairwise
+from functools import reduce
 
 
 Readings = List[int]
@@ -27,10 +28,7 @@ def expected_value(readings: Readings) -> int:
 
 def neg_expected_value(readings: Readings) -> int:
     differences = difference_readings(readings, 0)
-    cum_diff = 0
-    for x in reversed(differences):
-        cum_diff = x - cum_diff
-    return readings[0] - cum_diff
+    return readings[0] - reduce(lambda acc, x: x - acc, reversed(differences), 0)
 
 
 input = parse_readings("input.txt")
