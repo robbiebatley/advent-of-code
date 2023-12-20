@@ -36,13 +36,8 @@ def find_verticies(instructions: list[Instruction]) -> list[tuple[int, int]]:
         centers.append((i, j))
     assert centers[-1] == (0.5, 0.5)
 
-    # Make sure we always go around clockwise so that we can find outside corner
-    d0 = instructions[0].direction
-    d1 = instructions[1].direction
-    if (d0 == (0, 1) and d1 == (-1, 0)) or (d0 == (0, -1) and d1 == (1, 0)):
-        print("Traversing in reverse")
-        centers.reverse()
-        instructions.reverse()
+    # TODO: Make sure we always go around clockwise so that we can find outside corner
+    # Ended up not having to deal with this for my input 
 
     # Now go through and adjust centers to outside edge
     corner_adjustment = {
